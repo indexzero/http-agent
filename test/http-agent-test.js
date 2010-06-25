@@ -14,10 +14,13 @@ vows.describe('httpAgent').addBatch({
 	"When using an httpAgent": {
 		"the create() method": {
 			topic: function () {
-				return httpAgent.create();
+				return httpAgent.create('foo.com', ['a', 'b', 'c']);
 			},
 			"should return a valid httpAgent": function(agent) {
 				assert.instanceOf(agent, httpAgent.agent)
+				assert.equal(agent.urls.length, 3);
+				assert.equal(agent.urls[0], 'foo.com/a');
+				assert.equal(agent.host, 'foo.com');
 			}
 		}
 	}

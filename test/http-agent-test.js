@@ -4,6 +4,7 @@ var path = require('path'),
     events = require('events'),
     assert = require('assert'),
     eyes = require('eyes'),
+		net = require('net'),
     vows = require('vows');
 
 require.paths.unshift(path.join(__dirname, '..', 'lib'));
@@ -11,21 +12,19 @@ require.paths.unshift(path.join(__dirname, '..', 'lib'));
 var httpAgent = require('http-agent');
 
 function createAgent (options) {
-	options = options || {};
-	var host = options.host || 'graph.facebook.com';
-	var urls = options.urls || ['barackobama', 'facebook', 'google'];
-	var events = options.events || [];
-	
-	return httpAgent.create(host, urls);
+  options = options || {};
+  var host = options.host || 'graph.facebook.com';
+  var urls = options.urls || ['barackobama', 'facebook', 'google'];
+  var events = options.events || [];
+
+  return httpAgent.create(host, urls);
 }
 
-var someAgent = createAgent();
-someAgent.start();
 
 vows.describe('httpAgent').addBatch({
   "When using an httpAgent": {
     "the create() method": {
-			topic: createAgent(),
+      topic: createAgent(),
       "should return a valid httpAgent": function(agent) {
         assert.instanceOf(agent, httpAgent.agent)
         assert.equal(agent.nextUrls.length, 3);
@@ -43,22 +42,22 @@ vows.describe('httpAgent').addBatch({
     },
     "the start() method": {
       topic: function () {
-				var agent = createAgent();
-				agent.addListener('start', this.callback);
-				agent.start();
-			},
+        var agent = createAgent();
+        agent.addListener('start', this.callback);
+        agent.start();
+      },
       "should emit the started event": function(e, agent) {
         assert.instanceOf(agent, httpAgent.agent);
-				assert.equal(agent.nextUrls.length, 2);
-				assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook')
+        assert.equal(agent.nextUrls.length, 2);
+        assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook')
       }
     },
     "the stop() method": {
       topic: function () {
-				var agent = createAgent();
-				agent.addListener('stop', this.callback);
-				agent.stop();
-			},
+        var agent = createAgent();
+        agent.addListener('stop', this.callback);
+        agent.stop();
+      },
       "should emit the stopped event": function(e, agent) {
         assert.instanceOf(agent, httpAgent.agent);
       }

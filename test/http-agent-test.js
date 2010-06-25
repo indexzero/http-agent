@@ -12,15 +12,41 @@ var httpAgent = require('http-agent');
 		
 vows.describe('httpAgent').addBatch({
 	"When using an httpAgent": {
+		topic: function () {
+			return httpAgent.create('foo.com', ['a', 'b', 'c']);
+		},
 		"the create() method": {
-			topic: function () {
-				return httpAgent.create('foo.com', ['a', 'b', 'c']);
-			},
 			"should return a valid httpAgent": function(agent) {
 				assert.instanceOf(agent, httpAgent.agent)
-				assert.equal(agent.urls.length, 3);
-				assert.equal(agent.urls[0], 'foo.com/a');
+				assert.equal(agent.nextUrls.length, 3);
+				assert.equal(agent.nextUrls[0], 'foo.com/a');
+				assert.equal(agent.prevUrls.length, 0);
 				assert.equal(agent.host, 'foo.com');
+			},
+			"should return a valid event emitter": function(agent) {
+				assert.isFunction(agent.addListener);
+				assert.isFunction(agent.removeListener);
+				assert.isFunction(agent.removeAllListener);
+				assert.isFunction(agent.listeners);
+				assert.isFunction(agent.emit);
+			}
+		},
+		"the start() method": {
+			topic: function(agent) {
+				agent.addListener('start', this.callback);
+				agent.start();
+			},
+			"should emit the started event": function(agent) {
+				return true;
+			}
+		},
+		"the stop() method": {
+			topic: function(agent) {
+				agent.addListener('stop', this.callback);
+				agent.stop();
+			},
+			"should emit the stopped event": function(agent) {
+				return true;
 			}
 		}
 	}

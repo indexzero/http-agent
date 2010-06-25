@@ -13,7 +13,7 @@ var httpAgent = require('http-agent');
 vows.describe('httpAgent').addBatch({
 	"When using an httpAgent": {
 		topic: function () {
-			return httpAgent.create('foo.com', ['a', 'b', 'c']);
+			return httpAgent.create('foo.com', ['a', 'e', 'c']);
 		},
 		"the create() method": {
 			"should return a valid httpAgent": function(agent) {

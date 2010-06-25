@@ -5,10 +5,10 @@ var path = require('path'),
     assert = require('assert'),
 		eyes = require('eyes'),
 		vows = require('vows');
+
+require.paths.unshift(path.join(__dirname, '..', 'lib'));
 		
-require.paths.unshift(path.join(__dirname, '..', 'lib', 'http-agent'));
-		
-var httpAgent = require('httpAgent').httpAgent;
+var httpAgent = require('http-agent');
 		
 vows.describe('httpAgent').addBatch({
 	"When using an httpAgent": {
@@ -17,7 +17,7 @@ vows.describe('httpAgent').addBatch({
 				return httpAgent.create();
 			},
 			"should return a valid httpAgent": function(agent) {
-				assert.instanceOf(agent, httpAgent)
+				assert.instanceOf(agent, httpAgent.agent)
 			}
 		}
 	}

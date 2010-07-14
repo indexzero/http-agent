@@ -48,7 +48,7 @@ vows.describe('httpAgent').addBatch({
       }
     }
   }
-})/*.addBatch({
+}).addBatch({
   "When using an httpAgent": {
     "simple usage of": {
       "the create() method": {
@@ -93,5 +93,5 @@ vows.describe('httpAgent').addBatch({
       }
     },
   }
-})*/
+})
 .export(module);

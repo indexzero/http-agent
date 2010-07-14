@@ -39,6 +39,7 @@ vows.describe('httpAgent').addBatch({
           var agent = createAgent();
           agent.addListener('next', this.callback);
           agent.start();
+          agent.stop();
           return agent;
         },
         "should be raised after start": function(e, agent) { 
@@ -46,7 +47,18 @@ vows.describe('httpAgent').addBatch({
           assert.isNotNull(agent.response);
           agent.stop();
         }
-      }
+      },/*
+      "the next() method": {
+        topic: function () {
+          var agent = createAgent();
+          agent.addListener('next', this.callback);
+          agent.start();
+        },
+        "should emit the next event": function(e, agent) {
+          assert.instanceOf(agent, httpAgent.agent);
+          agent.next();
+        }
+      }*/
     }
   }
 }).addBatch({
@@ -85,13 +97,12 @@ vows.describe('httpAgent').addBatch({
           var agent = createAgent();
           agent.addListener('start', this.callback);
           agent.start();
+          agent.stop();
         },
         "should emit the started event": function(e, agent) {
           assert.instanceOf(agent, httpAgent.agent);
-          assert.equal(agent.nextUrls.length, 2);
-          assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
         }
-      }
+      },
     },
   }
 })

@@ -47,7 +47,7 @@ vows.describe('httpAgent').addBatch({
           assert.isNotNull(agent.response);
           agent.stop();
         }
-      },/*
+      },
       "the next() method": {
         topic: function () {
           var agent = createAgent();
@@ -58,7 +58,7 @@ vows.describe('httpAgent').addBatch({
           assert.instanceOf(agent, httpAgent.agent);
           agent.next();
         }
-      }*/
+      }
     }
   }
 }).addBatch({

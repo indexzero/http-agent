@@ -39,7 +39,6 @@ vows.describe('httpAgent').addBatch({
           var agent = createAgent();
           agent.addListener('next', this.callback);
           agent.start();
-          return agent;
         },
         "should be raised after start": function(e, agent) { 
           assert.instanceOf(agent, httpAgent.agent);
@@ -141,27 +140,42 @@ vows.describe('httpAgent').addBatch({
 }).addBatch({
   "When using an httpAgent": {
     "the back() method": {
-      topic: function () {
-        var agent = createAgent();
-        self = this;
-        
-        // Remark: This is a bit of a hack, vows should support
-        // async topic callbacks for multiple event chains.
-        var nextCallback = function (e,agent) {
-          agent.removeListener('next', nextCallback);
-          agent.addListener('next', self.callback);
+      "when called before start": {
+        topic: function() {
+          var agent = createAgent();
+          agent.addListener('next', this.callback);
+          
+          // Remark: Never mess with agent._running when consuming httpAgent. 
+          agent._running = true;
           agent.back();
-        };
-        
-        agent.addListener('next', nextCallback);
-        agent.start();
+        },
+        "should raise the next event with an error": function (e, agent) {
+          assert.isNotNull(e);
+        }
       },
-      "should emit the next event": function (e, agent) {
-        assert.instanceOf(agent, httpAgent.agent);
-        assert.equal(agent.nextUrls.length, 2);
-        assert.equal(agent.prevUrls.length, 2);
-        assert.equal(agent.prevUrls[0], "graph.facebook.com/barackobama");
-        assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
+      "when called after start": {
+        topic: function () {
+          var agent = createAgent();
+          self = this;
+        
+          // Remark: This is a bit of a hack, vows should support
+          // async topic callbacks for multiple event chains.
+          var nextCallback = function (e,agent) {
+            agent.removeListener('next', nextCallback);
+            agent.addListener('next', self.callback);
+            agent.back();
+          };
+        
+          agent.addListener('next', nextCallback);
+          agent.start();
+        },
+        "should emit the next event": function (e, agent) {
+          assert.instanceOf(agent, httpAgent.agent);
+          assert.equal(agent.nextUrls.length, 2);
+          assert.equal(agent.prevUrls.length, 2);
+          assert.equal(agent.prevUrls[0], "graph.facebook.com/barackobama");
+          assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
+        }
       }
     }
   }

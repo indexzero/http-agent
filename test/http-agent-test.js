@@ -39,13 +39,11 @@ vows.describe('httpAgent').addBatch({
           var agent = createAgent();
           agent.addListener('next', this.callback);
           agent.start();
-          //agent.stop();
           return agent;
         },
         "should be raised after start": function(e, agent) { 
           assert.instanceOf(agent, httpAgent.agent);
           assert.isNotNull(agent.response);
-          //agent.stop();
         }
       },
       "the next() method": {
@@ -97,7 +95,6 @@ vows.describe('httpAgent').addBatch({
           var agent = createAgent();
           agent.addListener('start', this.callback);
           agent.start();
-          agent.stop();
         },
         "should emit the started event": function(e, agent) {
           assert.instanceOf(agent, httpAgent.agent);
@@ -108,7 +105,6 @@ vows.describe('httpAgent').addBatch({
           var agent = createAgent();
           agent.addListener('next', this.callback);
           agent.start();
-          agent.stop();
         },
         "should emit the next event": function(e, agent) {
           assert.instanceOf(agent, httpAgent.agent);
@@ -116,31 +112,57 @@ vows.describe('httpAgent').addBatch({
           assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
         }
       },
-       "the next() method with passed in url": {
-          topic: function () {
-            var agent = createAgent();
-            self = this;
+      "the next() method when passed a url parameter": {
+        topic: function () {
+          var agent = createAgent();
+          self = this;
             
-            // Remark: This is a bit of a hack, vows should support
-            // async topic callbacks for multiple event chains.
-            var nextCallback = function (e,agent) {
-              agent.removeListener('next', nextCallback);
-              agent.addListener('next', self.callback);
-              agent.next("a_new_page");
-            };
+          // Remark: This is a bit of a hack, vows should support
+          // async topic callbacks for multiple event chains.
+          var nextCallback = function (e,agent) {
+            agent.removeListener('next', nextCallback);
+            agent.addListener('next', self.callback);
+            agent.next("yahoo");
+          };
             
-            agent.addListener('next', nextCallback);
-            agent.start();
-          },
-          "should emit the next event": function(e, agent) {
-            assert.instanceOf(agent, httpAgent.agent);
-            assert.equal(agent.nextUrls.length, 2);
-            assert.equal(agent.prevUrls.length, 2);
-            agent.stop();
-            assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
-          }
+          agent.addListener('next', nextCallback);
+          agent.start();
+        },
+        "should emit the next event": function(e, agent) {
+          assert.instanceOf(agent, httpAgent.agent);
+          assert.equal(agent.nextUrls.length, 2);
+          assert.equal(agent.prevUrls.length, 2);
+          assert.equal(agent.prevUrls[0], "graph.facebook.com/yahoo");
+          assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
         }
-    },
+      }
+    }
   }
-})
-.export(module);
+}).addBatch({
+  "When using an httpAgent": {
+    "the back() method": {
+      topic: function () {
+        var agent = createAgent();
+        self = this;
+        
+        // Remark: This is a bit of a hack, vows should support
+        // async topic callbacks for multiple event chains.
+        var nextCallback = function (e,agent) {
+          agent.removeListener('next', nextCallback);
+          agent.addListener('next', self.callback);
+          agent.back();
+        };
+        
+        agent.addListener('next', nextCallback);
+        agent.start();
+      },
+      "should emit the next event": function (e, agent) {
+        assert.instanceOf(agent, httpAgent.agent);
+        assert.equal(agent.nextUrls.length, 2);
+        assert.equal(agent.prevUrls.length, 2);
+        assert.equal(agent.prevUrls[0], "graph.facebook.com/barackobama");
+        assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
+      }
+    }
+  }
+}).export(module);

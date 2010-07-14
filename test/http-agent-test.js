@@ -39,13 +39,13 @@ vows.describe('httpAgent').addBatch({
           var agent = createAgent();
           agent.addListener('next', this.callback);
           agent.start();
-          agent.stop();
+          //agent.stop();
           return agent;
         },
         "should be raised after start": function(e, agent) { 
           assert.instanceOf(agent, httpAgent.agent);
           assert.isNotNull(agent.response);
-          agent.stop();
+          //agent.stop();
         }
       },
       "the next() method": {
@@ -56,7 +56,7 @@ vows.describe('httpAgent').addBatch({
         },
         "should emit the next event": function(e, agent) {
           assert.instanceOf(agent, httpAgent.agent);
-          agent.next();
+          //agent.next();
         }
       }
     }
@@ -119,20 +119,27 @@ vows.describe('httpAgent').addBatch({
        "the next() method with passed in url": {
           topic: function () {
             var agent = createAgent();
-            agent.addListener('next', this.callback);
+            self = this;
+            
+            // Remark: This is a bit of a hack, vows should support
+            // async topic callbacks for multiple event chains.
+            var nextCallback = function (e,agent) {
+              agent.removeListener('next', nextCallback);
+              agent.addListener('next', self.callback);
+              agent.next("a_new_page");
+            };
+            
+            agent.addListener('next', nextCallback);
             agent.start();
           },
-          "after the agent has been started": {
-            topic: function (e, agent) {
-              agent.next("a_new_page");
-            },
-            "should emit the next event": function(e, agent) {
-              assert.instanceOf(agent, httpAgent.agent);
-              assert.equal(agent.nextUrls.length, 2);
-              assert.equal(agent._visited, 'sd');
-            
-              assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
-            }
+          "should emit the next event": function(e, agent) {
+            assert.instanceOf(agent, httpAgent.agent);
+            assert.equal(agent.nextUrls.length, 2);
+            eyes.inspect(agent.prevUrls);
+            assert.equal(agent.prevUrls.length, 2);
+            agent.stop();
+          
+            assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
           }
         }
     },

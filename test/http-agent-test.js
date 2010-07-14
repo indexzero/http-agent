@@ -103,6 +103,38 @@ vows.describe('httpAgent').addBatch({
           assert.instanceOf(agent, httpAgent.agent);
         }
       },
+      "the next() method": {
+        topic: function () {
+          var agent = createAgent();
+          agent.addListener('next', this.callback);
+          agent.start();
+          agent.stop();
+        },
+        "should emit the next event": function(e, agent) {
+          assert.instanceOf(agent, httpAgent.agent);
+          assert.equal(agent.nextUrls.length, 2);
+          assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
+        }
+      },
+       "the next() method with passed in url": {
+          topic: function () {
+            var agent = createAgent();
+            agent.addListener('next', this.callback);
+            agent.start();
+          },
+          "after the agent has been started": {
+            topic: function (e, agent) {
+              agent.next("a_new_page");
+            },
+            "should emit the next event": function(e, agent) {
+              assert.instanceOf(agent, httpAgent.agent);
+              assert.equal(agent.nextUrls.length, 2);
+              assert.equal(agent._visited, 'sd');
+            
+              assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
+            }
+          }
+        }
     },
   }
 })

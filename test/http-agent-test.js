@@ -43,7 +43,8 @@ vows.describe('httpAgent').addBatch({
         },
         "should be raised after start": function(e, agent) { 
           assert.instanceOf(agent, httpAgent.agent);
-          agent.next();
+          assert.isNotNull(agent.response);
+          agent.stop();
         }
       }
     }

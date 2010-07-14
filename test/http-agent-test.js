@@ -135,10 +135,8 @@ vows.describe('httpAgent').addBatch({
           "should emit the next event": function(e, agent) {
             assert.instanceOf(agent, httpAgent.agent);
             assert.equal(agent.nextUrls.length, 2);
-            eyes.inspect(agent.prevUrls);
             assert.equal(agent.prevUrls.length, 2);
             agent.stop();
-          
             assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
           }
         }

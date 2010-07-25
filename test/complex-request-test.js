@@ -37,6 +37,16 @@ var complexUrls = [
 
 vows.describe('httpAgent').addBatch({
   "When using an httpAgent": {
+    "to browse an undefined url": {
+      topic: function () {
+        var agent = helpers.createAgent({ urls: [undefined] });
+        agent.addListener('next', this.callback);
+        agent.start();
+      },
+      "should throw an error": function (err, agent) {
+        assert.isNotNull(err);
+      }
+    },
     "to browse a path of complex urls": {
       "the next event": {
         topic: function () {
@@ -45,6 +55,7 @@ vows.describe('httpAgent').addBatch({
           agent.start();
         },
         "should be raised after start": function (e, agent) { 
+          eyes.inspect(e);
           assert.instanceOf(agent, httpAgent.HttpAgent);
           assert.isNotNull(agent.response);
         }

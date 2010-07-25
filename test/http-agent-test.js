@@ -1,42 +1,29 @@
+/*
+ * http-agent-test.js: Tests for simple HttpAgent usage
+ *
+ * (C) 2010 Charlie Robbins
+ * MIT LICENSE
+ *
+ */
+
 var path = require('path'),
     sys = require('sys'),
-    http = require('http'),
     events = require('events'),
     assert = require('assert'),
     eyes = require('eyes'),
-		net = require('net'),
-    vows = require('vows');
+		vows = require('vows');
 
 require.paths.unshift(path.join(__dirname, '..', 'lib'));
 
-var httpAgent = require('http-agent');
-
-function createAgent (options) {
-  options = options || {};
-  var host = options.host || 'graph.facebook.com';
-  var urls = options.urls || ['barackobama', 'facebook', 'google'];
-  var events = options.events || [];
-
-  return httpAgent.create(host, urls);
-}
-
-function createServer (options) {
-  options = options || {};
-  var port = options.port || 8080;
-  
-  http.createServer(function (req, res) {
-    res.sendHeader(200, {'Content-Type': 'text/plain'});
-    eyes.inspect(req);
-    res.end();
-  }).listen(port);
-}
+var httpAgent = require('http-agent'),
+    helpers = require('./helpers');
 
 vows.describe('httpAgent').addBatch({
   "When using an httpAgent": {
     "to browse a path of urls": {
       "the next event": {
         topic: function() {
-          var agent = createAgent();
+          var agent = helpers.createAgent();
           agent.addListener('next', this.callback);
           agent.start();
         },
@@ -47,7 +34,7 @@ vows.describe('httpAgent').addBatch({
       },
       "the next() method": {
         topic: function () {
-          var agent = createAgent();
+          var agent = helpers.createAgent();
           agent.addListener('next', this.callback);
           agent.start();
         },
@@ -61,7 +48,7 @@ vows.describe('httpAgent').addBatch({
   "When using an httpAgent": {
     "simple usage of": {
       "the create() method": {
-        topic: createAgent(),
+        topic: helpers.createAgent(),
         "should return a valid httpAgent": function(agent) {
           assert.instanceOf(agent, httpAgent.HttpAgent)
           assert.equal(agent.nextUrls.length, 3);
@@ -79,7 +66,7 @@ vows.describe('httpAgent').addBatch({
       },
       "the stop() method": {
         topic: function () {
-          var agent = createAgent();
+          var agent = helpers.createAgent();
           agent.addListener('stop', this.callback);
           agent.start();
           agent.stop();
@@ -90,7 +77,7 @@ vows.describe('httpAgent').addBatch({
       },
       "the start() method": {
         topic: function () {
-          var agent = createAgent();
+          var agent = helpers.createAgent();
           agent.addListener('start', this.callback);
           agent.start();
         },
@@ -100,7 +87,7 @@ vows.describe('httpAgent').addBatch({
       },
       "the next() method": {
         topic: function () {
-          var agent = createAgent();
+          var agent = helpers.createAgent();
           agent.addListener('next', this.callback);
           agent.start();
         },
@@ -112,7 +99,7 @@ vows.describe('httpAgent').addBatch({
       },
       "the next() method when passed a url parameter": {
         topic: function () {
-          var agent = createAgent();
+          var agent = helpers.createAgent();
           self = this;
             
           // Remark: This is a bit of a hack, vows should support
@@ -141,7 +128,7 @@ vows.describe('httpAgent').addBatch({
     "the back() method": {
       "when called before start": {
         topic: function() {
-          var agent = createAgent();
+          var agent = helpers.createAgent();
           agent.addListener('next', this.callback);
           
           // Remark: Never mess with agent._running when consuming httpAgent. 
@@ -154,7 +141,7 @@ vows.describe('httpAgent').addBatch({
       },
       "when called after start": {
         topic: function () {
-          var agent = createAgent();
+          var agent = helpers.createAgent();
           self = this;
         
           // Remark: This is a bit of a hack, vows should support

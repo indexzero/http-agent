@@ -41,7 +41,7 @@ vows.describe('httpAgent').addBatch({
           agent.start();
         },
         "should be raised after start": function(e, agent) { 
-          assert.instanceOf(agent, httpAgent.agent);
+          assert.instanceOf(agent, httpAgent.HttpAgent);
           assert.isNotNull(agent.response);
         }
       },
@@ -52,8 +52,7 @@ vows.describe('httpAgent').addBatch({
           agent.start();
         },
         "should emit the next event": function(e, agent) {
-          assert.instanceOf(agent, httpAgent.agent);
-          //agent.next();
+          assert.instanceOf(agent, httpAgent.HttpAgent);
         }
       }
     }
@@ -64,7 +63,7 @@ vows.describe('httpAgent').addBatch({
       "the create() method": {
         topic: createAgent(),
         "should return a valid httpAgent": function(agent) {
-          assert.instanceOf(agent, httpAgent.agent)
+          assert.instanceOf(agent, httpAgent.HttpAgent)
           assert.equal(agent.nextUrls.length, 3);
           assert.equal(agent.nextUrls[0], 'graph.facebook.com/barackobama');
           assert.equal(agent.prevUrls.length, 0);
@@ -86,7 +85,7 @@ vows.describe('httpAgent').addBatch({
           agent.stop();
         },
         "should emit the stopped event when previously started": function(e, agent) {
-          assert.instanceOf(agent, httpAgent.agent);
+          assert.instanceOf(agent, httpAgent.HttpAgent);
         }
       },
       "the start() method": {
@@ -96,7 +95,7 @@ vows.describe('httpAgent').addBatch({
           agent.start();
         },
         "should emit the started event": function(e, agent) {
-          assert.instanceOf(agent, httpAgent.agent);
+          assert.instanceOf(agent, httpAgent.HttpAgent);
         }
       },
       "the next() method": {
@@ -106,7 +105,7 @@ vows.describe('httpAgent').addBatch({
           agent.start();
         },
         "should emit the next event": function(e, agent) {
-          assert.instanceOf(agent, httpAgent.agent);
+          assert.instanceOf(agent, httpAgent.HttpAgent);
           assert.equal(agent.nextUrls.length, 2);
           assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
         }
@@ -128,7 +127,7 @@ vows.describe('httpAgent').addBatch({
           agent.start();
         },
         "should emit the next event": function(e, agent) {
-          assert.instanceOf(agent, httpAgent.agent);
+          assert.instanceOf(agent, httpAgent.HttpAgent);
           assert.equal(agent.nextUrls.length, 2);
           assert.equal(agent.prevUrls.length, 2);
           assert.equal(agent.prevUrls[0], "graph.facebook.com/yahoo");
@@ -170,7 +169,7 @@ vows.describe('httpAgent').addBatch({
           agent.start();
         },
         "should emit the next event": function (e, agent) {
-          assert.instanceOf(agent, httpAgent.agent);
+          assert.instanceOf(agent, httpAgent.HttpAgent);
           assert.equal(agent.nextUrls.length, 2);
           assert.equal(agent.prevUrls.length, 2);
           assert.equal(agent.prevUrls[0], "graph.facebook.com/barackobama");

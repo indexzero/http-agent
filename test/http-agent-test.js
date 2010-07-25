@@ -22,12 +22,12 @@ vows.describe('httpAgent').addBatch({
   "When using an httpAgent": {
     "to browse a path of urls": {
       "the next event": {
-        topic: function() {
+        topic: function () {
           var agent = helpers.createAgent();
           agent.addListener('next', this.callback);
           agent.start();
         },
-        "should be raised after start": function(e, agent) { 
+        "should be raised after start": function (e, agent) { 
           assert.instanceOf(agent, httpAgent.HttpAgent);
           assert.isNotNull(agent.response);
         }
@@ -38,7 +38,7 @@ vows.describe('httpAgent').addBatch({
           agent.addListener('next', this.callback);
           agent.start();
         },
-        "should emit the next event": function(e, agent) {
+        "should emit the next event": function (e, agent) {
           assert.instanceOf(agent, httpAgent.HttpAgent);
         }
       }
@@ -49,14 +49,14 @@ vows.describe('httpAgent').addBatch({
     "simple usage of": {
       "the create() method": {
         topic: helpers.createAgent(),
-        "should return a valid httpAgent": function(agent) {
+        "should return a valid httpAgent": function (agent) {
           assert.instanceOf(agent, httpAgent.HttpAgent)
           assert.equal(agent.nextUrls.length, 3);
           assert.equal(agent.nextUrls[0], 'graph.facebook.com/barackobama');
           assert.equal(agent.prevUrls.length, 0);
           assert.equal(agent.host, 'graph.facebook.com');
         },
-        "should return a valid event emitter": function(agent) {
+        "should return a valid event emitter": function (agent) {
           assert.isFunction(agent.addListener);
           assert.isFunction(agent.removeListener);
           assert.isFunction(agent.removeAllListener);
@@ -71,7 +71,7 @@ vows.describe('httpAgent').addBatch({
           agent.start();
           agent.stop();
         },
-        "should emit the stopped event when previously started": function(e, agent) {
+        "should emit the stopped event when previously started": function (e, agent) {
           assert.instanceOf(agent, httpAgent.HttpAgent);
         }
       },
@@ -81,7 +81,7 @@ vows.describe('httpAgent').addBatch({
           agent.addListener('start', this.callback);
           agent.start();
         },
-        "should emit the started event": function(e, agent) {
+        "should emit the started event": function (e, agent) {
           assert.instanceOf(agent, httpAgent.HttpAgent);
         }
       },
@@ -91,7 +91,7 @@ vows.describe('httpAgent').addBatch({
           agent.addListener('next', this.callback);
           agent.start();
         },
-        "should emit the next event": function(e, agent) {
+        "should emit the next event": function (e, agent) {
           assert.instanceOf(agent, httpAgent.HttpAgent);
           assert.equal(agent.nextUrls.length, 2);
           assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
@@ -113,7 +113,7 @@ vows.describe('httpAgent').addBatch({
           agent.addListener('next', nextCallback);
           agent.start();
         },
-        "should emit the next event": function(e, agent) {
+        "should emit the next event": function (e, agent) {
           assert.instanceOf(agent, httpAgent.HttpAgent);
           assert.equal(agent.nextUrls.length, 2);
           assert.equal(agent.prevUrls.length, 2);
@@ -127,7 +127,7 @@ vows.describe('httpAgent').addBatch({
   "When using an httpAgent": {
     "the back() method": {
       "when called before start": {
-        topic: function() {
+        topic: function () {
           var agent = helpers.createAgent();
           agent.addListener('next', this.callback);
           

@@ -62,7 +62,7 @@ vows.describe('httpAgent').addBatch({
           assert.isFunction(agent.removeAllListener);
           assert.isFunction(agent.listeners);
           assert.isFunction(agent.emit);
-        }
+        },
       },
       "the stop() method": {
         topic: function () {
@@ -119,6 +119,14 @@ vows.describe('httpAgent').addBatch({
           assert.equal(agent.prevUrls.length, 2);
           assert.equal(agent.prevUrls[0], "graph.facebook.com/yahoo");
           assert.equal(agent.nextUrls[0], 'graph.facebook.com/facebook');
+        }
+      },
+      "the addUrl() method": {
+        topic: helpers.createAgent(),
+        "should append a url to the set of nextUrls": function (agent) {
+          agent.addUrl('apple');
+          assert.equal(agent.nextUrls.length, 4);
+          assert.equal(agent.nextUrls[3], 'graph.facebook.com/apple');
         }
       }
     }

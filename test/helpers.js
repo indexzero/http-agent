@@ -19,7 +19,6 @@ helpers.createAgent = function (options) {
   options = options || {};
   var host = options.host || 'graph.facebook.com';
   var urls = options.urls || ['barackobama', 'facebook', 'google'];
-  var events = options.events || [];
 
   return httpAgent.create(host, urls);
 };

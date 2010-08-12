@@ -4,6 +4,14 @@ A simple agent for performing a sequence of http requests in node.js
 
 ## PROJECT UNDER DEVELOPMENT
 
+### Installation
+
+<pre>
+  npm install request
+  cd /your/source/dir
+  git clone http://github.com/indexzero/http-agent.git
+</pre>
+
 ### Usage 
 <pre>
   var sys = require('sys'),

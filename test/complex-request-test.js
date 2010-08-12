@@ -23,19 +23,19 @@ var httpAgent = require('http-agent'),
 var complexUrls = [
   {
     method: 'GET',
-    url: 'barackobama'
+    uri: 'barackobama'
   },
   {
     method: 'GET',
-    url: 'facebook'
+    uri: 'facebook'
   },
   {
     method: 'GET',
-    url: 'google'
+    uri: 'google'
   }
 ];
 
-vows.describe('httpAgent').addBatch({
+vows.describe('httpAgent/object-request').addBatch({
   "When using an httpAgent": {
     "to browse an undefined url": {
       topic: function () {
@@ -55,7 +55,6 @@ vows.describe('httpAgent').addBatch({
           agent.start();
         },
         "should be raised after start": function (e, agent) { 
-          eyes.inspect(e);
           assert.instanceOf(agent, httpAgent.HttpAgent);
           assert.isNotNull(agent.response);
         }

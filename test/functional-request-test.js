@@ -12,8 +12,7 @@ var path = require('path'),
     http = require('http'),
     events = require('events'),
     assert = require('assert'),
-    eyes = require('eyes'),
-		net = require('net'),
+    net = require('net'),
     vows = require('vows');
 
 require.paths.unshift(path.join(__dirname, '..', 'lib'));

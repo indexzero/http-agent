@@ -1,0 +1,17 @@
+{
+  "name": "http-agent",
+  "description": "A simple agent for performing a sequence of http requests in node.js",
+  "version": "0.1.0",
+  "author": "Charlie Robbins <charlie.robbins@gmail.com>",
+  "repository": {
+      "type": "git",
+      "url": "http://github.com/indexzero/http-agent/" 
+  },
+  "keywords": ["http-agent", "iterator", "http", "webcrawler"],
+  "dependencies": {
+    "request": ">= 0.10.0"
+  },
+  "main": "./lib/http-agent",
+  "scripts": { "test": "vows test/*-test.js --spec" },
+  "engines": { "node": ">= 0.2.0" }
+}

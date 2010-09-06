@@ -10,8 +10,7 @@ var path = require('path'),
     sys = require('sys'),
     events = require('events'),
     assert = require('assert'),
-    eyes = require('eyes'),
-		vows = require('vows');
+    vows = require('vows');
 
 require.paths.unshift(path.join(__dirname, '..', 'lib'));
 

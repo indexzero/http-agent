@@ -29,7 +29,6 @@ helpers.createServer = function (options) {
   
   http.createServer(function (req, res) {
     res.sendHeader(200, {'Content-Type': 'text/plain'});
-    eyes.inspect(req);
     res.end();
   }).listen(port);
 };

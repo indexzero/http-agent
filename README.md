@@ -33,6 +33,7 @@ There are several way to use http-agent:
     // Simple usage: Just output the raw
     // HTML returned from each request
     sys.puts(agent.body);
+    agent.next();
   });
   
   agent.addListener('stop', function (e, agent) {
@@ -70,6 +71,7 @@ Since http-agent is based on top of request, it can take a set of JSON objects f
     // Simple usage: Just output the raw
     // HTML returned from each request
     sys.puts(agent.body);
+    agent.next();
   });
   
   agent.addListener('stop', function (e, agent) {
@@ -99,6 +101,7 @@ Each time an instance of http-agent raises the 'next' event the agent is passed 
     // Simple usage: Just output the raw
     // HTML returned from each request
     sys.puts(agent.body);
+    agent.next();
   });
   
   agent.addListener('stop', function (e, agent) {

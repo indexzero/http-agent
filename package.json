@@ -5,7 +5,7 @@
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "repository": {
       "type": "git",
-      "url": "http://github.com/indexzero/http-agent/" 
+      "url": "http://github.com/indexzero/http-agent.git" 
   },
   "keywords": ["http-agent", "iterator", "http", "webcrawler"],
   "dependencies": {

@@ -89,7 +89,7 @@ Each time an instance of http-agent raises the 'next' event the agent is passed 
       httpAgent = require('path/to/http-agent/lib');
   
   var agent = httpAgent.create('graph.facebook.com', ['apple', 'facebook', 'google']),
-      addPage = false;
+      addPage = true;
   
   agent.addListener('next', function (e, agent) {
     if (addPage) {

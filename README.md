@@ -119,4 +119,4 @@ Each time an instance of http-agent raises the 'next' event the agent is passed 
 
 #### Author: [Charlie Robbins](http://www.charlierobbins.com);
 
-[0]: http://github.com/mikeal/node-utils/tree/master/request/
+[0]: https://github.com/mikeal/request

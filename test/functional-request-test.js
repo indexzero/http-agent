@@ -13,11 +13,8 @@ var path = require('path'),
     events = require('events'),
     assert = require('assert'),
     net = require('net'),
-    vows = require('vows');
-
-require.paths.unshift(path.join(__dirname, '..', 'lib'));
-
-var httpAgent = require('http-agent');
+    vows = require('vows'),
+    httpAgent = require('../lib/http-agent');
 
 vows.describe('httpAgent').addBatch({
   

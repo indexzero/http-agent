@@ -10,11 +10,8 @@ var path = require('path'),
     sys = require('sys'),
     events = require('events'),
     assert = require('assert'),
-    vows = require('vows');
-
-require.paths.unshift(path.join(__dirname, '..', 'lib'));
-
-var httpAgent = require('http-agent'),
+    vows = require('vows'),
+    httpAgent = require('../lib/http-agent'),
     helpers = require('./helpers');
 
 vows.describe('httpAgent').addBatch({
@@ -58,7 +55,6 @@ vows.describe('httpAgent').addBatch({
         "should return a valid event emitter": function (agent) {
           assert.isFunction(agent.addListener);
           assert.isFunction(agent.removeListener);
-          assert.isFunction(agent.removeAllListener);
           assert.isFunction(agent.listeners);
           assert.isFunction(agent.emit);
         },

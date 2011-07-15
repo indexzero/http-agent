@@ -7,11 +7,8 @@
  */
 
 var http = require('http'),
-    path = require('path');
-
-require.paths.unshift(path.join(__dirname, '..', '..', 'lib'));
-
-var httpAgent = require('http-agent');
+    path = require('path'),
+    httpAgent = require('../lib/http-agent');
 
 var helpers = exports;
 

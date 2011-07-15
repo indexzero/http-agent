@@ -1,7 +1,7 @@
 {
   "name": "http-agent",
   "description": "A simple agent for performing a sequence of http requests in node.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "repository": {
     "type": "git",

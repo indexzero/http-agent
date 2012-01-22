@@ -112,6 +112,20 @@ Each time an instance of http-agent raises the 'next' event the agent is passed 
   agent.start();
 </pre>
 
+## Cache 
+If you call the constructor with an option "cache", it will save the results in this folder, and on the subsequent calls read it from this cache instead of doing an http request.
+
+The cache never expires. If you want to clear the cache simply remove any file in this folder.
+If the cache folder doesn't exist, it tries to create it.
+
+<pre>
+  var sys = require('sys'),
+  httpAgent = require('path/to/http-agent/lib');
+  
+  var agent = httpAgent.create('graph.facebook.com', ['apple', 'facebook', 'google'],{'cache':'/tmp/http-agent'});
+
+{'cache':'/tmp/mep'}
+</pre>
 ## Run Tests
 <pre>
   vows test/*-test.js --spec

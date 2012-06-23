@@ -24,7 +24,7 @@ There are several way to use http-agent:
 
 ### Using http-agent to visit a set of URLs on a single host with 'GET'
 <pre>
-  var sys = require('sys'),
+  var util = require('util'),
       httpAgent = require('path/to/http-agent/lib');
   
   var agent = httpAgent.create('graph.facebook.com', ['apple', 'facebook', 'google']);
@@ -32,12 +32,12 @@ There are several way to use http-agent:
   agent.addListener('next', function (e, agent) {
     // Simple usage: Just output the raw
     // HTML returned from each request
-    sys.puts(agent.body);
+    util.puts(agent.body);
     agent.next();
   });
   
   agent.addListener('stop', function (e, agent) {
-    sys.puts('Agent has completed visiting all urls');
+    util.puts('Agent has completed visiting all urls');
   });
   
   // Start the agent
@@ -48,7 +48,7 @@ There are several way to use http-agent:
 Since http-agent is based on top of request, it can take a set of JSON objects for request to use. If you're looking for more documentation about what parameters are relevant to http-agent, see [request][0] which http-agent is built on top of. 
 
 <pre>
-  var sys = require('sys'),
+  var util = require('util'),
       httpAgent = require('path/to/http-agent/lib');
   
   var options = [
@@ -70,12 +70,12 @@ Since http-agent is based on top of request, it can take a set of JSON objects f
   agent.addListener('next', function (e, agent) {
     // Simple usage: Just output the raw
     // HTML returned from each request
-    sys.puts(agent.body);
+    util.puts(agent.body);
     agent.next();
   });
   
   agent.addListener('stop', function (e, agent) {
-    sys.puts('Agent has completed visiting all urls');
+    util.puts('Agent has completed visiting all urls');
   });
   
   // Start the agent
@@ -85,7 +85,7 @@ Since http-agent is based on top of request, it can take a set of JSON objects f
 ### Using http-agent as an iterator over webpages
 Each time an instance of http-agent raises the 'next' event the agent is passed back as a parameter. That allows us to change the control flow of pages each time a page is visited. The agent is also passed back to other important events such as 'stop' and 'back'.
 <pre>
-  var sys = require('sys'),
+  var util = require('util'),
       httpAgent = require('path/to/http-agent/lib');
   
   var agent = httpAgent.create('graph.facebook.com', ['apple', 'facebook', 'google']),
@@ -100,12 +100,12 @@ Each time an instance of http-agent raises the 'next' event the agent is passed 
 
     // Simple usage: Just output the raw
     // HTML returned from each request
-    sys.puts(agent.body);
+    util.puts(agent.body);
     agent.next();
   });
   
   agent.addListener('stop', function (e, agent) {
-    sys.puts('Agent has completed visiting all urls');
+    util.puts('Agent has completed visiting all urls');
   });
   
   // Start the agent
